@@ -1,0 +1,64 @@
+---
+swagger: "2.0"
+info:
+  description: "simple demo for testing android"
+  version: "1.0.0"
+  title: "demo"
+basePath: "/home"
+tags:
+- name: "Android"
+  description: "Android controller"
+schemes:
+- "https"
+- "http"
+paths:
+  /open/{apkId}:
+    post:
+      tags:
+      - "utils"
+      summary: "open android game in server"
+      description: ""
+      operationId: "open"
+      parameters:
+      - name: "apkId"
+        in: "path"
+        description: "package name of the app to be opened"
+        required: true
+        type: "string"
+        x-exportParamName: "ApkId"
+      responses:
+        "405":
+          description: "Invalid input"
+  /intall/{appUrl}:
+    post:
+      tags:
+      - "utils"
+      summary: "install app by url"
+      description: "Execute installation"
+      operationId: "installApp"
+      parameters:
+      - name: "appUrl"
+        in: "path"
+        description: "url of the app to be intalled"
+        required: true
+        type: "string"
+        x-exportParamName: "AppUrl"
+      responses:
+        "200":
+          description: "successful download"
+        "400":
+          description: "Invalid url"
+        "404":
+          description: "File not found"
+  /showPackage/:
+    get:
+      tags:
+      - "utils"
+      summary: "show external packages and internal packages"
+      description: "show packages"
+      operationId: "showPackage"
+      parameters: []
+      responses:
+        "200":
+          description: "package display"
+definitions: {}
