@@ -2,15 +2,9 @@
 A simple implementation of a remote controller over android devices 
 # Go API Server for android
 
--open packages
--install APK
--show package info
+This demo builds a simple server on android for remote control function(e.g. open packages, install APK files, print package info,etc)
 
 ## Overview
-This demo builds a simple server on android for remote control function(e.g. open packages, install APK files, print package info,etc)
--
-
-
 
 - API version: 1.0.0
 - Build date: 2020-06-16T02:54:00.100Z
