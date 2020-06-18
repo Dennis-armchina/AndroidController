@@ -1,10 +1,13 @@
 # AndroidController
 A simple implementation of a remote controller over android devices 
-# Go API Server for swagger
+# Go API Server for android
 
+-open packages
+-install APK
+-show package info
 
 ## Overview
-This demo builds a simple server on android for remote control function(e.g. open packages, install APK files, print package infoetc)
+This demo builds a simple server on android for remote control function(e.g. open packages, install APK files, print package info,etc)
 -
 
 
@@ -15,9 +18,10 @@ This demo builds a simple server on android for remote control function(e.g. ope
 
 ### Running the server
 To build for your own android devices on windows，follow these simple steps:
-'''
+
+```
 ./build.bat
-'''
+```
 
 To run the server, follow these simple steps:
 ```
