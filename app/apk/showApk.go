@@ -10,14 +10,6 @@ import (
 	"time"
 )
 
-type showResponse struct {
-	Code   int
-	Msg    string
-	Data   []string
-	Method string
-	Time   string
-}
-
 //ShowApk method returns installed Apks
 func ShowApk(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sh", "/system/bin/pm", "list", "packages", "-3")
@@ -26,8 +18,8 @@ func ShowApk(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("error : ", err)
 		fmt.Println("cmd: ", cmd)
-		response := showResponse{
-			Code:   400,
+		response := ApkResponse{
+			Code:   BadRequest,
 			Msg:    "fail",
 			Data:   []string{"not available"},
 			Method: "list-package",
@@ -37,8 +29,8 @@ func ShowApk(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, string(resJSON))
 	} else {
 		info := strings.Split(string(out), "\n")
-		response := showResponse{
-			Code:   200,
+		response := ApkResponse{
+			Code:   Success,
 			Msg:    "success",
 			Data:   info[:len(info)-1],
 			Method: "list-package",

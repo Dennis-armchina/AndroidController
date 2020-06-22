@@ -10,7 +10,8 @@ import (
 	"time"
 )
 
-type batteryResponse struct {
+//DeviceResponse base format
+type DeviceResponse struct {
 	Code   int
 	Msg    string
 	Data   []string
@@ -19,15 +20,21 @@ type batteryResponse struct {
 	Device string
 }
 
+//status code
+const (
+	Success      = 200
+	AlreadyStart = 201
+	BadRequest   = 400
+)
+
 //ShowBattery returns info of the battery
 func ShowBattery(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("dumpsys", "battery")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		response := batteryResponse{
-			Code:   400,
+		response := DeviceResponse{
+			Code:   BadRequest,
 			Msg:    "error: " + err.Error(),
-			Data:   []string{"not available"},
 			Method: "list-battery",
 			Time:   time.Now().String(),
 			Device: GetDevice(),
@@ -37,8 +44,8 @@ func ShowBattery(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, string(resJSON))
 	} else {
 		info := strings.Split(string(out), "\n")
-		response := batteryResponse{
-			Code:   200,
+		response := DeviceResponse{
+			Code:   Success,
 			Msg:    "success",
 			Data:   info,
 			Method: "list-battery",
@@ -49,4 +56,11 @@ func ShowBattery(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%s\n", resJSON)
 		io.WriteString(w, string(resJSON))
 	}
+}
+
+//Trim the string to get rid of "\t", "\n"
+func Trim(input string) string {
+	trim := strings.Replace(input, "\n", " ", -1)
+	trim = strings.Replace(trim, "\t", " ", -1)
+	return trim
 }

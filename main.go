@@ -24,7 +24,7 @@ import (
 )
 
 func main() {
-	log.Printf("Server V1.2 started")
+	log.Printf("Server V1.3 started")
 	log.Println("working at IP", pk.ListWlan())
 	router := pk.NewRouter()
 	log.Fatal(http.ListenAndServe(":8080", router))

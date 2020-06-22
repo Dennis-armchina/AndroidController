@@ -9,13 +9,22 @@ import (
 	"time"
 )
 
-type installResponse struct {
+//ApkResponse base format
+type ApkResponse struct {
 	Code   int
 	Msg    string
-	Pkg    string
+	Data   []string
 	Method string
 	Time   string
+	Pkg    string
 }
+
+//status code
+const (
+	Success      = 200
+	AlreadyStart = 201
+	BadRequest   = 400
+)
 
 //InstallApk method parse the path of Apk and install
 func InstallApk(w http.ResponseWriter, r *http.Request) {
@@ -27,19 +36,18 @@ func InstallApk(w http.ResponseWriter, r *http.Request) {
 	_, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println("error to install:", err)
-		response := installResponse{
-			Code:   400,
+		response := ApkResponse{
+			Code:   BadRequest,
 			Msg:    "error: " + err.Error(),
-			Pkg:    apkURL,
 			Method: "install-package",
 			Time:   time.Now().String(),
+			Pkg:    apkURL,
 		}
 		resJSON, _ := json.Marshal(response)
 		io.WriteString(w, string(resJSON))
 	} else {
-		// fmt.Fprintln(w, "install successfully")
-		response := installResponse{
-			Code:   200,
+		response := ApkResponse{
+			Code:   Success,
 			Msg:    "success",
 			Pkg:    apkURL,
 			Method: "install-package",

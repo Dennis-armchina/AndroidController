@@ -12,7 +12,6 @@ package app
 import (
 	"fmt"
 	"net/http"
-	"os/exec"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -50,24 +49,6 @@ func NewRouter() *mux.Router {
 //Index show homepage
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to Android controller demo")
-}
-
-//ListWlan method output the wlan info of the host android devices
-func ListWlan() string {
-	cmd := exec.Command("ifconfig", "wlan0")
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("get wlan info failed:", err)
-	}
-	return getWlan(string(out))
-}
-
-func getWlan(info string) string {
-	wlanHead := "inet addr"
-	wlanEnd := "Bcast"
-	start := strings.Index(info, wlanHead)
-	end := strings.Index(info, wlanEnd)
-	return info[start+len(wlanHead)+1 : end]
 }
 
 var routes = Routes{

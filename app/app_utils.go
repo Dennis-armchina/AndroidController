@@ -11,12 +11,32 @@ package app
 
 import (
 	"fmt"
+	"os/exec"
+	"strings"
 
 	"net/http"
 
 	fc "./apk"
 	dv "./device"
 )
+
+//ListWlan method output the wlan info of the host android devices
+func ListWlan() string {
+	cmd := exec.Command("ifconfig", "wlan0")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println("get wlan info failed:", err)
+	}
+	return getWlan(string(out))
+}
+
+func getWlan(info string) string {
+	wlanHead := "inet addr"
+	wlanEnd := "Bcast"
+	start := strings.Index(info, wlanHead)
+	end := strings.Index(info, wlanEnd)
+	return info[start+len(wlanHead)+1 : end]
+}
 
 //InstallPackage for method to install apk file
 func InstallPackage(w http.ResponseWriter, r *http.Request) {
