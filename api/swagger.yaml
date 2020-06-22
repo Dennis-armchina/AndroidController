@@ -4,19 +4,19 @@ info:
   description: "simple demo for testing android"
   version: "1.0.0"
   title: "demo"
-basePath: "/home"
 tags:
 - name: "Android"
   description: "Android controller"
 schemes:
 - "https"
 - "http"
+basePath: "/v1/cloud-phone"
 paths:
-  /open/{apkId}:
+  /package/open-package/{apkId}:
     post:
       tags:
-      - "utils"
-      summary: "open android game in server"
+      - "app"
+      summary: "open android package in server"
       description: ""
       operationId: "open"
       parameters:
@@ -25,21 +25,21 @@ paths:
         description: "package name of the app to be opened"
         required: true
         type: "string"
-        x-exportParamName: "ApkId"
+        x-exportParamName: "apkId"
       responses:
         "405":
           description: "Invalid input"
-  /intall/{appUrl}:
+  /package/install-package/{appUrl}:
     post:
       tags:
-      - "utils"
+      - "app"
       summary: "install app by url"
       description: "Execute installation"
       operationId: "installApp"
       parameters:
       - name: "appUrl"
         in: "path"
-        description: "url of the app to be intalled"
+        description: "URL of the app to be intalled"
         required: true
         type: "string"
         x-exportParamName: "AppUrl"
@@ -50,15 +50,13 @@ paths:
           description: "Invalid url"
         "404":
           description: "File not found"
-  /showPackage/:
+  /package/list-package/:
     get:
       tags:
-      - "utils"
+      - "app"
       summary: "show external packages and internal packages"
       description: "show packages"
       operationId: "showPackage"
-      parameters: []
       responses:
         "200":
           description: "package display"
-definitions: {}

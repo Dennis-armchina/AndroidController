@@ -20,11 +20,12 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	sw "./go"
+	pk "./app"
 )
 
 func main() {
-	log.Printf("Server started")
-	router := sw.NewRouter()
+	log.Printf("Server V1.2 started")
+	log.Println("working at IP", pk.ListWlan())
+	router := pk.NewRouter()
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
